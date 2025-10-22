@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/fights")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -22,5 +24,11 @@ public class FightController {
     public ResponseEntity<FightDTO> createFight(@Valid @RequestBody CreateFightRequest request) {
         FightDTO fight = fightService.createFight(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(fight);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FightDTO>> getAllFights() {
+        List<FightDTO> fights = fightService.getAllFights();
+        return ResponseEntity.ok(fights);
     }
 }

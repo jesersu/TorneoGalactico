@@ -7,4 +7,10 @@ export const fightsApi = {
     const response = await apiClient.post<Fight>('/fights', data);
     return response.data;
   },
+
+  // Get all fights
+  getAllFights: async (): Promise<Fight[]> => {
+    const response = await apiClient.get<Fight[]>('/fights');
+    return response.data;
+  },
 };

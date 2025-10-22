@@ -24,6 +24,12 @@ export const HomePage = () => {
               Start a Battle
             </Button>
           </Link>
+
+          <Link to="/fight-history">
+            <Button variant="secondary" size="lg" className="w-full">
+              View Fight History
+            </Button>
+          </Link>
         </div>
 
         <div className="mt-12 text-sm text-gray-500">

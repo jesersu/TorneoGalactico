@@ -4,16 +4,22 @@ import com.morningvalue.application.dto.CreateFightRequest;
 import com.morningvalue.application.dto.FightDTO;
 import com.morningvalue.application.dto.SpeciesDTO;
 import com.morningvalue.application.usecase.CreateFightUseCase;
+import com.morningvalue.application.usecase.GetAllFightsUseCase;
 import com.morningvalue.domain.entity.Fight;
 import com.morningvalue.domain.entity.Species;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class FightService {
     private final CreateFightUseCase createFightUseCase;
+    private final GetAllFightsUseCase getAllFightsUseCase;
 
-    public FightService(CreateFightUseCase createFightUseCase) {
+    public FightService(CreateFightUseCase createFightUseCase, GetAllFightsUseCase getAllFightsUseCase) {
         this.createFightUseCase = createFightUseCase;
+        this.getAllFightsUseCase = getAllFightsUseCase;
     }
 
     public FightDTO createFight(CreateFightRequest request) {
@@ -22,6 +28,13 @@ public class FightService {
                 request.getSpecies2Id()
         );
         return toDTO(fight);
+    }
+
+    public List<FightDTO> getAllFights() {
+        List<Fight> fights = getAllFightsUseCase.execute();
+        return fights.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
     private FightDTO toDTO(Fight fight) {
