@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: morningvalue-postgres-prod
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-morningvalue}
+      POSTGRES_USER: ${DATABASE_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD is required}
+    volumes:
+      - postgres-prod-data:/var/lib/postgresql/data
+    networks:
+      - morningvalue-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    # Don't expose postgres port externally in production
+    # ports:
+    #   - "5432:5432"
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: morningvalue-backend-prod
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${DATABASE_NAME:-morningvalue}
+      DATABASE_USERNAME: ${DATABASE_USERNAME:-postgres}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD is required}
+      # CORS not needed - nginx proxies requests
+      CORS_ALLOWED_ORIGINS: http://frontend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - morningvalue-network
+    restart: always
+    # Don't expose backend port externally - only accessible through nginx
+    # ports:
+    #   - "8080:8080"
+
+  # React Frontend (Production with Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: production
+    container_name: morningvalue-frontend-prod
+    ports:
+      # Single entry point for the application
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - morningvalue-network
+    restart: always
+
+volumes:
+  postgres-prod-data:
+    driver: local
+
+networks:
+  morningvalue-network:
+    driver: bridge

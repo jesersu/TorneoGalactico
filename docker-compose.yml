@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # PostgreSQL Database
   postgres:
     image: postgres:16-alpine
     container_name: morningvalue-postgres
@@ -19,10 +20,12 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
+  # Spring Boot Backend
   backend:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     container_name: morningvalue-backend
     environment:
@@ -38,6 +41,35 @@ services:
         condition: service_healthy
     networks:
       - morningvalue-network
+    restart: unless-stopped
+
+  # React Frontend (Development with hot-reload)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development
+    container_name: morningvalue-frontend
+    environment:
+      # Backend URL accessible from browser (host machine)
+      REACT_APP_API_BASE_URL: http://localhost:8080
+      # Enable hot reload
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount source code for hot-reload
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      # Prevent node_modules from being overwritten
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - morningvalue-network
+    stdin_open: true
+    tty: true
     restart: unless-stopped
 
 volumes:
