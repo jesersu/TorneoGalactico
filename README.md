@@ -2,6 +2,8 @@
 
 A full-stack application demonstrating **Clean Architecture** principles across both frontend and backend tiers. Create powerful species, engage them in epic battles, track fight history, and climb the rankings.
 
+[An explanatory video of the application]([https://example.com](https://www.youtube.com/watch?v=ZNxXfOz9r9M))
+
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue.svg)](https://www.typescriptlang.org/)
@@ -242,12 +244,6 @@ npm test -- --coverage
 - **Backend**: Follow Clean Architecture principles, domain entities must be framework-agnostic
 - **Frontend**: Feature encapsulation, types match backend DTOs, hooks for all data fetching
 - **Both**: Use environment variables for configuration, never commit secrets
-
-## Docker Documentation
-
-For comprehensive Docker setup, networking, troubleshooting, and best practices, see:
-- **[DOCKER_SETUP.md](DOCKER_SETUP.md)** - Complete Docker guide
-- **[CLAUDE.md](CLAUDE.md)** - Development guide for Claude Code
 
 ## Common Issues
 
