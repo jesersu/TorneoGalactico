@@ -2,6 +2,7 @@ package com.morningvalue.presentation.controller;
 
 import com.morningvalue.application.dto.CreateSpeciesRequest;
 import com.morningvalue.application.dto.SpeciesDTO;
+import com.morningvalue.application.dto.SpeciesRankingDTO;
 import com.morningvalue.application.service.SpeciesService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -36,5 +37,11 @@ public class SpeciesController {
     public ResponseEntity<SpeciesDTO> getSpeciesById(@PathVariable Long id) {
         SpeciesDTO species = speciesService.getSpeciesById(id);
         return ResponseEntity.ok(species);
+    }
+
+    @GetMapping("/ranking")
+    public ResponseEntity<List<SpeciesRankingDTO>> getSpeciesRanking() {
+        List<SpeciesRankingDTO> ranking = speciesService.getSpeciesRanking();
+        return ResponseEntity.ok(ranking);
     }
 }

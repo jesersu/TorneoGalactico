@@ -12,4 +12,7 @@ import java.util.List;
 public interface FightJpaRepository extends JpaRepository<FightJpaEntity, Long> {
     @Query("SELECT f FROM FightJpaEntity f WHERE f.species1.id = :speciesId OR f.species2.id = :speciesId")
     List<FightJpaEntity> findBySpeciesId(@Param("speciesId") Long speciesId);
+
+    @Query("SELECT COUNT(f) FROM FightJpaEntity f WHERE f.winner.id = :speciesId")
+    Long countVictoriesBySpeciesId(@Param("speciesId") Long speciesId);
 }

@@ -42,4 +42,9 @@ public class FightRepositoryImpl implements FightRepository {
                 .map(mapper::toDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Long countVictoriesBySpeciesId(Long speciesId) {
+        return jpaRepository.countVictoriesBySpeciesId(speciesId);
+    }
 }

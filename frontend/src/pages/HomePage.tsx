@@ -25,6 +25,12 @@ export const HomePage = () => {
             </Button>
           </Link>
 
+          <Link to="/ranking">
+            <Button variant="primary" size="lg" className="w-full">
+              View Rankings
+            </Button>
+          </Link>
+
           <Link to="/fight-history">
             <Button variant="secondary" size="lg" className="w-full">
               View Fight History

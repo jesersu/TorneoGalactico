@@ -12,4 +12,12 @@ export interface CreateSpeciesRequest {
   specialPower: string;
 }
 
+export interface SpeciesRanking {
+  id: number;
+  name: string;
+  powerLevel: number;
+  specialPower: string;
+  victories: number;
+}
+
 export type SpeciesFormData = CreateSpeciesRequest;

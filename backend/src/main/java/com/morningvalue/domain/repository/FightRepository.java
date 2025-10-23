@@ -10,4 +10,5 @@ public interface FightRepository {
     Optional<Fight> findById(Long id);
     List<Fight> findAll();
     List<Fight> findBySpeciesId(Long speciesId);
+    Long countVictoriesBySpeciesId(Long speciesId);
 }
