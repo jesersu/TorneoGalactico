@@ -2,7 +2,7 @@
 
 A full-stack application demonstrating **Clean Architecture** principles across both frontend and backend tiers. Create powerful species, engage them in epic battles, track fight history, and climb the rankings.
 
-[An explanatory video of the application]([https://example.com](https://www.youtube.com/watch?v=ZNxXfOz9r9M))
+[An explanatory video of the application](https://www.youtube.com/watch?v=ZNxXfOz9r9M)
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org/)
